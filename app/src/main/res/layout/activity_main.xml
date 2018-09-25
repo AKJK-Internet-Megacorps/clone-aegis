@@ -15,7 +15,30 @@
         android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+
+
     <!-- note: the fab should always be the last element to be sure it's displayed on top -->
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:layout_anchor="@+id/key_profiles"
+        style="@style/ColoredBottomAppBar"
+        app:layout_anchorGravity="bottom|center" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_black_24dp"
+        android:tint="@color/background"
+
+        app:layout_anchor="@id/bar"/>
+
+
+    <!--
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -48,6 +71,6 @@
             app:fab_colorPressed="@color/background"
             app:fab_icon="@drawable/ic_create_black_24dp"/>
 
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

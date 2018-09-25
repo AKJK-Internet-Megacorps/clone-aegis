@@ -31,6 +31,7 @@ import com.avito.android.krop.KropView;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 import com.esafirm.imagepicker.model.Image;
+import com.google.android.material.bottomappbar.BottomAppBar;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -86,9 +87,8 @@ public class EditEntryActivity extends AegisActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_entry);
 
-        ActionBar bar = getSupportActionBar();
-        bar.setHomeAsUpIndicator(R.drawable.ic_close);
-        bar.setDisplayHomeAsUpEnabled(true);
+        BottomAppBar bottomAppBar = findViewById(R.id.bar);
+        setSupportActionBar(bottomAppBar);
 
         // retrieve info from the calling activity
         Intent intent = getIntent();

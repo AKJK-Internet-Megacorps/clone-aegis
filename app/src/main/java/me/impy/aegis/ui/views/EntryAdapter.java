@@ -19,6 +19,9 @@ import me.impy.aegis.otp.OtpInfoException;
 import me.impy.aegis.otp.TotpInfo;
 
 public class EntryAdapter extends RecyclerView.Adapter<EntryHolder> implements ItemTouchHelperAdapter {
+    private static final int HEADER = 1;
+    private static final int NORMAL_ITEM = 2;
+
     private List<DatabaseEntry> _entries;
     private static Listener _listener;
     private boolean _showAccountName;
@@ -28,6 +31,7 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryHolder> implements I
 
     public EntryAdapter(Listener listener) {
         _entries = new ArrayList<>();
+        _entries.add(new DatabaseEntry(null));
         _holders = new ArrayList<>();
         _listener = listener;
     }
@@ -111,9 +115,25 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryHolder> implements I
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return HEADER;
+        } else {
+            return NORMAL_ITEM;
+        }
+    }
+
+    @Override
     public EntryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_entry, parent, false);
-        return new EntryHolder(view);
+        View view = null;
+        if (viewType == HEADER) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_title, parent, false);
+            return new EntryHolder(view, true);
+        } else {
+             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_entry, parent, false);
+        }
+
+        return new EntryHolder(view, false);
     }
 
     @Override
@@ -124,47 +144,50 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryHolder> implements I
 
     @Override
     public void onBindViewHolder(final EntryHolder holder, int position) {
-        DatabaseEntry entry = _entries.get(position);
-        boolean showProgress = !isPeriodUniform() && entry.getInfo() instanceof TotpInfo;
-        holder.setData(entry, _showAccountName, showProgress);
-        if (showProgress) {
-            holder.startRefreshLoop();
-        }
+        if (getItemViewType(position) == NORMAL_ITEM) {
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                _listener.onEntryClick(_entries.get(position));
+            DatabaseEntry entry = _entries.get(position);
+            boolean showProgress = !isPeriodUniform() && entry.getInfo() instanceof TotpInfo;
+            holder.setData(entry, _showAccountName, showProgress);
+            if (showProgress) {
+                holder.startRefreshLoop();
             }
-        });
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                int position = holder.getAdapterPosition();
-                return _listener.onLongEntryClick(_entries.get(position));
-            }
-        });
-        holder.setOnRefreshClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // this will only be called if the entry is of type HotpInfo
-                try {
-                    ((HotpInfo)entry.getInfo()).incrementCounter();
-                } catch (OtpInfoException e) {
-                    throw new RuntimeException(e);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getAdapterPosition();
+                    _listener.onEntryClick(_entries.get(position));
                 }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = holder.getAdapterPosition();
+                    return _listener.onLongEntryClick(_entries.get(position));
+                }
+            });
+            holder.setOnRefreshClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // this will only be called if the entry is of type HotpInfo
+                    try {
+                        ((HotpInfo) entry.getInfo()).incrementCounter();
+                    } catch (OtpInfoException e) {
+                        throw new RuntimeException(e);
+                    }
 
-                // notify the listener that the counter has been incremented
-                // this gives it a chance to save the database
-                _listener.onEntryChange(entry);
+                    // notify the listener that the counter has been incremented
+                    // this gives it a chance to save the database
+                    _listener.onEntryChange(entry);
 
-                // finally, refresh the code in the UI
-                holder.refreshCode();
-            }
-        });
+                    // finally, refresh the code in the UI
+                    holder.refreshCode();
+                }
+            });
 
-        _holders.add(holder);
+            _holders.add(holder);
+        }
     }
 
     public int getUniformPeriod() {

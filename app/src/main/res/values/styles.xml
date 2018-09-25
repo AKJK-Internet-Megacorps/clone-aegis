@@ -16,7 +16,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="primaryText">@color/primary_text</item>
         <item name="secondaryText">@color/secondary_text</item>
         <item name="cardBackground">@color/card_background</item>
@@ -26,12 +26,27 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="background">@color/background</item>
         <item name="bottomSheetDialogTheme">@style/Theme.Design.Light.BottomSheetDialog</item>
+        <item name="windowActionBar">false</item>
 
         <item name="iconColorPrimary">@color/icon_primary</item>
         <item name="iconColorInverted">@color/icon_primary_inverted</item>
 
         <item name="swirl_ridgeColor">@color/colorSwirlPrimary</item>
         <item name="swirl_errorColor">@color/colorSwirlError</item>
+
+        <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.MaterialComponents.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.MaterialComponents.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.MaterialComponents.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.MaterialComponents.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.MaterialComponents.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.MaterialComponents.Body2</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.MaterialComponents.Caption</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -49,7 +64,7 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="AppTheme.Dark" parent="Theme.AppCompat">
+    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="primaryText">@color/primary_text_dark</item>
         <item name="secondaryText">@color/secondary_text_dark</item>
         <item name="cardBackground">@color/card_background_dark</item>
@@ -81,6 +96,10 @@
     <style name="fab_label_style">
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="ColoredBottomAppBar" parent="Widget.MaterialComponents.BottomAppBar.Colored">
+        <item name="actionMenuTextColor">@color/primary_text_dark</item>
     </style>
 
 </resources>

@@ -6,6 +6,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +20,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.lang.reflect.UndeclaredThrowableException;
 
+import androidx.appcompat.widget.Toolbar;
 import me.impy.aegis.AegisApplication;
 import me.impy.aegis.R;
 import me.impy.aegis.crypto.MasterKey;
@@ -64,8 +67,11 @@ public class MainActivity extends AegisActivity implements EntryListView.Listene
         _entryListView.setListener(this);
         _entryListView.setShowAccountName(getPreferences().isAccountNameVisible());
 
+        BottomAppBar bar = (BottomAppBar) findViewById(R.id.bar);
+        setSupportActionBar(bar);
+
         // set up the floating action button
-        _fabMenu = findViewById(R.id.fab);
+/*        _fabMenu = findViewById(R.id.fab);
         findViewById(R.id.fab_enter).setOnClickListener(view -> {
             _fabMenu.collapse();
             startEditProfileActivity(CODE_ENTER_ENTRY, null, true);
@@ -73,9 +79,10 @@ public class MainActivity extends AegisActivity implements EntryListView.Listene
         findViewById(R.id.fab_scan).setOnClickListener(view -> {
             _fabMenu.collapse();
             startScanActivity();
-        });
+        });*/
     }
 
+/*
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         // collapse the fab menu on touch
@@ -92,6 +99,7 @@ public class MainActivity extends AegisActivity implements EntryListView.Listene
 
         return super.dispatchTouchEvent(event);
     }
+*/
 
     @Override
     protected void onNewIntent(Intent intent) {

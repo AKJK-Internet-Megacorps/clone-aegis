@@ -19,6 +19,8 @@ import me.impy.aegis.otp.HotpInfo;
 import me.impy.aegis.otp.TotpInfo;
 
 public class EntryHolder extends RecyclerView.ViewHolder {
+    private boolean isHeader = false;
+
     private TextView _profileName;
     private TextView _profileCode;
     private TextView _profileIssuer;
@@ -30,8 +32,13 @@ public class EntryHolder extends RecyclerView.ViewHolder {
 
     private UiRefresher _refresher;
 
-    public EntryHolder(final View view) {
+    public EntryHolder(final View view, boolean isHeader) {
         super(view);
+
+        this.isHeader = isHeader;
+        if(isHeader)
+            return;
+
         _profileName = view.findViewById(R.id.profile_account_name);
         _profileCode = view.findViewById(R.id.profile_code);
         _profileIssuer = view.findViewById(R.id.profile_issuer);
@@ -91,10 +98,16 @@ public class EntryHolder extends RecyclerView.ViewHolder {
     }
 
     public void startRefreshLoop() {
+        if(this.isHeader)
+            return;
+
         _refresher.start();
     }
 
     public void stopRefreshLoop() {
+        if(this.isHeader)
+            return;
+
         _refresher.stop();
     }
 
